@@ -110,3 +110,5 @@ degreeCelsius.addEventListener("click", celsius);
 
 let degreeFahrenheit = document.querySelector("#degree-fahrenheit");
 degreeFahrenheit.addEventListener("click", fahrenheit);
+
+searchCity("Antananarivo");
