@@ -9,6 +9,9 @@ h1 {
   max-width: 900px;
   margin: 30px auto;
 }
+p::first-letter {
+  text-transform: capitalize;
+}
 
 .weather-app {
   border: 1px solid #dadde1;

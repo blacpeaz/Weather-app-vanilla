@@ -22,23 +22,42 @@ if (minutes < 10) {
 }
 day.innerHTML = `${today} ${hour}:${minutes}`;
 
-//Temp display
+//Temp Display & its properties
 function showTemperature(response) {
-  let temperature = response.data.main.temp;
+  console.log(response);
   let tempNum = document.querySelector("#temp-num");
-  tempNum.innerHTML = Math.round(temperature);
+  let heading = document.querySelector("h1");
+  let precipitation = document.querySelector("#precipitation");
+  let humidity = document.querySelector("#humidity");
+  let wind = document.querySelector("#wind");
+  let icon = document.querySelector("#icon");
+  let description = document.querySelector("#description");
+  celsiusTemp = response.data.main.temp;
+
+  tempNum.innerHTML = Math.round(response.data.main.temp);
+  heading.innerHTML = response.data.name;
+  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
+  wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} Km/H`;
+  precipitation.innerHTML = `Precipitation: ${Math.round(
+    response.data.rain["1h"]
+  )}`;
+  description.innerHTML = response.data.weather[1].description;
+  icon.setAttribute(
+    "src",
+    ` https://openweathermap.org/img/wn/${response.data.weather[1].icon}@2x.png`
+  );
+  icon.setAttribute("alt", response.data.weather[1].description);
 }
 
-// for display search input
+// Getting the input value
 function displayCity(event) {
   event.preventDefault();
-  let heading = document.querySelector("h1");
   let searchInput = document.querySelector("#search-input");
-  let city = searchInput.value;
-  city = city.trim().toLowerCase();
+  searchCity(searchInput.value);
+}
 
-  heading.innerHTML = city;
-
+// for calling API
+function searchCity(city) {
   let apiKey = "ce144f0cf51fa43f03431f0488a36728";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
@@ -61,37 +80,30 @@ function showCurrentTemp() {
   navigator.geolocation.getCurrentPosition(retrievePosition);
 }
 
-let currentBtn = document.querySelector("#current-btn");
-currentBtn.addEventListener("click", showCurrentTemp);
-
-// unit
-
+// units
 //Celsius
 function celsius(event) {
   event.preventDefault();
   degreeCelsius.classList.add("active");
   degreeFahrenheit.classList.remove("active");
-  displayCity(event);
-  showTemperature(response);
+  let tempNum = document.querySelector("#temp-num");
+  tempNum.innerHTML = Math.round(celsiusTemp);
 }
 
 // Fahrenheit
-function showFahrenheit(imperial) {
-  let fahrenheitTemp = imperial.data.main.temp;
-  let tempNum = document.querySelector("#temp-num");
-  tempNum.innerHTML = Math.round(fahrenheitTemp);
-}
-
 function fahrenheit(event) {
   event.preventDefault();
   degreeCelsius.classList.remove("active");
   degreeFahrenheit.classList.add("active");
-  let searchInput = document.querySelector("#search-input");
-  let city = searchInput.value;
-  let apiKey = "ce144f0cf51fa43f03431f0488a36728";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-  axios.get(apiUrl).then(showFahrenheit);
+  let fahrenheitTemp = (celsiusTemp * 9) / 5 + 32;
+  let tempNum = document.querySelector("#temp-num");
+  tempNum.innerHTML = Math.round(fahrenheitTemp);
 }
+
+let currentBtn = document.querySelector("#current-btn");
+currentBtn.addEventListener("click", showCurrentTemp);
+
+let celsiusTemp = null;
 
 let inputForm = document.querySelector("#input-form");
 inputForm.addEventListener("submit", displayCity);
@@ -101,3 +113,5 @@ degreeCelsius.addEventListener("click", celsius);
 
 let degreeFahrenheit = document.querySelector("#degree-fahrenheit");
 degreeFahrenheit.addEventListener("click", fahrenheit);
+
+searchCity("Antananarivo");
