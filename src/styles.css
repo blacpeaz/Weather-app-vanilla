@@ -1,0 +1,85 @@
+h1 {
+  text-transform: capitalize;
+  padding: 5px 38px 0px;
+  font-size: 30px;
+  margin: 0;
+  line-height: 0.5;
+}
+.weather-app-wrapper {
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+.weather-app {
+  border: 1px solid #dadde1;
+  border-radius: 5px;
+}
+
+.degree-unit {
+  position: relative;
+  top: -34px;
+  font-size: 16px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:active {
+  font-weight: bold;
+}
+
+.container {
+  margin: 50px auto;
+  width: 50%;
+}
+
+.input-city {
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.weather-today {
+  margin: 20px 20px 0;
+}
+
+.weather-today img {
+  margin: 5px 5px 0;
+  width: 64px;
+  height: 64px;
+}
+
+.weather-today strong {
+  color: rgb(33, 33, 33);
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.other-weather-parameters {
+  margin: 0 10px 5px;
+}
+
+.weather-condition {
+  text-align: center;
+  color: yellow;
+  font-size: 50px;
+}
+
+.days {
+  text-align: center;
+  margin: 2px;
+  padding-right: 25px;
+}
+
+.newdays {
+  padding-left: 15px;
+}
+
+.divider {
+  color: black;
+  margin-left: 20px;
+}
