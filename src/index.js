@@ -24,7 +24,6 @@ day.innerHTML = `${today} ${hour}:${minutes}`;
 
 //Temp Display & its properties
 function showTemperature(response) {
-  console.log(response);
   let tempNum = document.querySelector("#temp-num");
   let heading = document.querySelector("h1");
   let precipitation = document.querySelector("#precipitation");
@@ -38,15 +37,13 @@ function showTemperature(response) {
   heading.innerHTML = response.data.name;
   humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
   wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} Km/H`;
-  precipitation.innerHTML = `Precipitation: ${Math.round(
-    response.data.rain["1h"]
-  )}`;
-  description.innerHTML = response.data.weather[1].description;
+  precipitation.innerHTML = `Precipitation: ${Math.round(response.data.rain)}`;
+  description.innerHTML = response.data.weather[0].description;
   icon.setAttribute(
     "src",
-    ` https://openweathermap.org/img/wn/${response.data.weather[1].icon}@2x.png`
+    ` https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
-  icon.setAttribute("alt", response.data.weather[1].description);
+  icon.setAttribute("alt", response.data.weather[0].description);
 }
 
 // Getting the input value
@@ -113,5 +110,3 @@ degreeCelsius.addEventListener("click", celsius);
 
 let degreeFahrenheit = document.querySelector("#degree-fahrenheit");
 degreeFahrenheit.addEventListener("click", fahrenheit);
-
-searchCity("Antananarivo");
