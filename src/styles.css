@@ -66,23 +66,25 @@ a:active {
   margin: 0 10px 5px;
 }
 
-.weather-condition {
-  text-align: center;
-  color: yellow;
-  font-size: 50px;
-}
-
-.days {
-  text-align: center;
-  margin: 2px;
-  padding-right: 25px;
-}
-
-.newdays {
-  padding-left: 15px;
-}
-
-.divider {
-  color: black;
+.weather-date-description {
   margin-left: 20px;
+}
+
+.weather-forecast {
+  margin: 20px 0;
+  text-align: center;
+  color: #000;
+}
+
+.weather-forecast-date {
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+.weather-forecast-temp {
+  font-size: 13px;
+}
+
+.weather-forecast-temp-min {
+  opacity: 0.5;
 }
