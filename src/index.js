@@ -22,7 +22,8 @@ if (minutes < 10) {
 }
 day.innerHTML = `${today} ${hour}:${minutes}`;
 
-function showWeatherForecast() {
+function showWeatherForecast(response) {
+  console.log(response.data);
   let weatherForecast = document.querySelector("#weather-forecast");
 
   let forecastHTML = `<div class="row">`;
@@ -42,6 +43,16 @@ function showWeatherForecast() {
 
   forecastHTML = forecastHTML + `</div>`;
   weatherForecast.innerHTML = forecastHTML;
+}
+
+function getCoordinates(coordinates) {
+  console.log(coordinates);
+  let apiKey = "de2c40e370d58e257faf07ba4ea95840";
+  let lat = coordinates.lat;
+  let lon = coordinates.lon;
+
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(showWeatherForecast);
 }
 
 //Temp Display & its properties
@@ -66,6 +77,8 @@ function showTemperature(response) {
     ` https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
   icon.setAttribute("alt", response.data.weather[0].description);
+
+  getCoordinates(response.data.coord);
 }
 
 // Getting the input value
@@ -134,4 +147,3 @@ let degreeFahrenheit = document.querySelector("#degree-fahrenheit");
 degreeFahrenheit.addEventListener("click", fahrenheit);
 
 searchCity("Antananarivo");
-showWeatherForecast();
