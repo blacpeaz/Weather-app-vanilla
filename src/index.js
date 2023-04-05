@@ -22,6 +22,28 @@ if (minutes < 10) {
 }
 day.innerHTML = `${today} ${hour}:${minutes}`;
 
+function showWeatherForecast() {
+  let weatherForecast = document.querySelector("#weather-forecast");
+
+  let forecastHTML = `<div class="row">`;
+  let days = ["Wed", "Thu", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      ` <div class="col-2">
+        <div class="weather-forecast-date">${day}</div>
+          <img src="images/sunny.png" alt="" width="42" />
+            <div class="weather-forecast-temp">
+              <span class="weather-forecast-temp-max"> 18° </span>
+                <span class="weather-forecast-temp-min"> 12° </span>
+            </div>
+        </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  weatherForecast.innerHTML = forecastHTML;
+}
+
 //Temp Display & its properties
 function showTemperature(response) {
   let tempNum = document.querySelector("#temp-num");
@@ -112,3 +134,4 @@ let degreeFahrenheit = document.querySelector("#degree-fahrenheit");
 degreeFahrenheit.addEventListener("click", fahrenheit);
 
 searchCity("Antananarivo");
+showWeatherForecast();
