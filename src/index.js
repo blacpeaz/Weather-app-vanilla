@@ -78,8 +78,8 @@ function showTemperature(response) {
 
   tempNum.innerHTML = Math.round(response.data.main.temp);
   heading.innerHTML = response.data.name;
-  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
-  wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} Km/H`;
+  humidity.innerHTML = `Humidity: ${response.data.main.humidity} %`;
+  wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} km/h`;
   precipitation.innerHTML = `Precipitation: ${Math.round(response.data.rain)}`;
   description.innerHTML = response.data.weather[0].description;
   icon.setAttribute(
