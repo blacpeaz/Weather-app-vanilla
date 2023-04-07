@@ -22,36 +22,21 @@ if (minutes < 10) {
 }
 day.innerHTML = `${today} ${hour}:${minutes}`;
 
-<<<<<<< HEAD
 function formatDay(daysOfWeek) {
   let date = new Date(daysOfWeek * 1000);
   let day = date.getDay();
 
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-=======
-function formatDay (daysOfWeek) {
-  let date = new Date(daysOfWeek * 1000);
-  let day = date.getDay();
-  
-  console.log(day)
-  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
->>>>>>> 95d6d25353b4e2826df4daaa4fcc94d811e372f4
   return days[day];
 }
 
 function showWeatherForecast(response) {
-<<<<<<< HEAD
   let forecast = response.data.daily;
-=======
-  console.log(response.data.daily);
-  forecast = response.data.daily;
->>>>>>> 95d6d25353b4e2826df4daaa4fcc94d811e372f4
   let weatherForecast = document.querySelector("#weather-forecast");
 
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (futureForecast, index) {
     if (index < 6) {
-<<<<<<< HEAD
       forecastHTML =
         forecastHTML +
         ` <div class="col-2">
@@ -72,19 +57,6 @@ function showWeatherForecast(response) {
             </div>
         </div>`;
     }
-=======
-    forecastHTML =
-      forecastHTML +
-      ` <div class="col-2">
-        <div class="weather-forecast-date">${formatDay(futureForecast.dt)}</div>
-          <img src="https://openweathermap.org/img/wn/${futureForecast.weather[0].icon}@2x.png" alt="" width="42" />
-            <div class="weather-forecast-temp">
-              <span class="weather-forecast-temp-max"> ${Math.round(futureForecast.temp.max)}° </span>
-                <span class="weather-forecast-temp-min"> ${Math.round(futureForecast.temp.min)}° </span>
-            </div>
-        </div>`;
-      }
->>>>>>> 95d6d25353b4e2826df4daaa4fcc94d811e372f4
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -92,15 +64,9 @@ function showWeatherForecast(response) {
 }
 
 function getCoordinates(coordinates) {
-<<<<<<< HEAD
   apiKey = "ba7af5e1a0f20of6a802717t492a3b19";
   let lat = coordinates.latitude;
   let lon = coordinates.longitude;
-=======
-  let apiKey = "de2c40e370d58e257faf07ba4ea95840";
-  let lat = coordinates.lat;
-  let lon = coordinates.lon;
->>>>>>> 95d6d25353b4e2826df4daaa4fcc94d811e372f4
 
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${lon}&lat=${lat}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeatherForecast);
@@ -117,15 +83,10 @@ function showTemperature(response) {
   let description = document.querySelector("#description");
   celsiusTemp = response.data.temperature.current;
 
-<<<<<<< HEAD
   tempNum.innerHTML = Math.round(response.data.temperature.current);
   heading.innerHTML = response.data.city;
   humidity.innerHTML = `Humidity: ${response.data.temperature.humidity}%`;
-=======
-  tempNum.innerHTML = Math.round(response.data.main.temp);
-  heading.innerHTML = response.data.name;
-  humidity.innerHTML = `Humidity: ${response.data.main.humidity} %`;
->>>>>>> 95d6d25353b4e2826df4daaa4fcc94d811e372f4
+  heading.innerHTML = response.data.city;
   wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} km/h`;
   precipitation.innerHTML = `Precipitation: ${Math.round(response.data.rain)}`;
   description.innerHTML = response.data.condition.description;
