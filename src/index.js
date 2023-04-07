@@ -22,23 +22,41 @@ if (minutes < 10) {
 }
 day.innerHTML = `${today} ${hour}:${minutes}`;
 
+function formatDay(daysOfWeek) {
+  let date = new Date(daysOfWeek * 1000);
+  let day = date.getDay();
+
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
+}
+
 function showWeatherForecast(response) {
-  console.log(response.data);
+  let forecast = response.data.daily;
   let weatherForecast = document.querySelector("#weather-forecast");
 
   let forecastHTML = `<div class="row">`;
-  let days = ["Wed", "Thu", "Fri", "Sat"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      ` <div class="col-2">
-        <div class="weather-forecast-date">${day}</div>
-          <img src="images/sunny.png" alt="" width="42" />
+  forecast.forEach(function (futureForecast, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        ` <div class="col-2">
+        <div class="weather-forecast-date">${formatDay(
+          futureForecast.time
+        )}</div>
+          <img 
+          src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+            response.data.daily[0].condition.icon
+          }.png" alt="" width="42" />
             <div class="weather-forecast-temp">
-              <span class="weather-forecast-temp-max"> 18° </span>
-                <span class="weather-forecast-temp-min"> 12° </span>
+              <span class="weather-forecast-temp-max"> ${Math.round(
+                futureForecast.temperature.maximum
+              )}° </span>
+                <span class="weather-forecast-temp-min"> ${Math.round(
+                  futureForecast.temperature.minimum
+                )}° </span>
             </div>
         </div>`;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -46,12 +64,11 @@ function showWeatherForecast(response) {
 }
 
 function getCoordinates(coordinates) {
-  console.log(coordinates);
-  let apiKey = "de2c40e370d58e257faf07ba4ea95840";
-  let lat = coordinates.lat;
-  let lon = coordinates.lon;
+  apiKey = "ba7af5e1a0f20of6a802717t492a3b19";
+  let lat = coordinates.latitude;
+  let lon = coordinates.longitude;
 
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${lon}&lat=${lat}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeatherForecast);
 }
 
@@ -64,21 +81,21 @@ function showTemperature(response) {
   let wind = document.querySelector("#wind");
   let icon = document.querySelector("#icon");
   let description = document.querySelector("#description");
-  celsiusTemp = response.data.main.temp;
+  celsiusTemp = response.data.temperature.current;
 
-  tempNum.innerHTML = Math.round(response.data.main.temp);
-  heading.innerHTML = response.data.name;
-  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
-  wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} Km/H`;
+  tempNum.innerHTML = Math.round(response.data.temperature.current);
+  heading.innerHTML = response.data.city;
+  humidity.innerHTML = `Humidity: ${response.data.temperature.humidity}%`;
+  wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)} km/h`;
   precipitation.innerHTML = `Precipitation: ${Math.round(response.data.rain)}`;
-  description.innerHTML = response.data.weather[0].description;
+  description.innerHTML = response.data.condition.description;
   icon.setAttribute(
     "src",
-    ` https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    ` http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
   );
-  icon.setAttribute("alt", response.data.weather[0].description);
+  icon.setAttribute("alt", response.data.condition.description);
 
-  getCoordinates(response.data.coord);
+  getCoordinates(response.data.coordinates);
 }
 
 // Getting the input value
@@ -90,18 +107,18 @@ function displayCity(event) {
 
 // for calling API
 function searchCity(city) {
-  let apiKey = "ce144f0cf51fa43f03431f0488a36728";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  apiKey = "ba7af5e1a0f20of6a802717t492a3b19";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 
   axios.get(apiUrl).then(showTemperature);
 }
 
 //current temp
 function retrievePosition(position) {
-  let apiKey = "ce144f0cf51fa43f03431f0488a36728";
+  let apiKey = "ba7af5e1a0f20of6a802717t492a3b19";
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?lat=${lat}&lon=${lon}&key=${apiKey}&units=metric`;
   let heading = document.querySelector("h1");
   heading.innerHTML = "Antananarivo";
 
@@ -145,5 +162,7 @@ degreeCelsius.addEventListener("click", celsius);
 
 let degreeFahrenheit = document.querySelector("#degree-fahrenheit");
 degreeFahrenheit.addEventListener("click", fahrenheit);
+
+let apiKey = "ba7af5e1a0f20of6a802717t492a3b19";
 
 searchCity("Antananarivo");
