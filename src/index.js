@@ -22,6 +22,7 @@ if (minutes < 10) {
 }
 day.innerHTML = `${today} ${hour}:${minutes}`;
 
+// returns day for forecast
 function formatDay(daysOfWeek) {
   let date = new Date(daysOfWeek * 1000);
   let day = date.getDay();
@@ -30,6 +31,7 @@ function formatDay(daysOfWeek) {
   return days[day];
 }
 
+// displays forcast temp and icon
 function showWeatherForecast(response) {
   let forecast = response.data.daily;
   let weatherForecast = document.querySelector("#weather-forecast");
@@ -63,6 +65,7 @@ function showWeatherForecast(response) {
   weatherForecast.innerHTML = forecastHTML;
 }
 
+// gets coordinates and calls API
 function getCoordinates(coordinates) {
   apiKey = "ba7af5e1a0f20of6a802717t492a3b19";
   let lat = coordinates.latitude;
